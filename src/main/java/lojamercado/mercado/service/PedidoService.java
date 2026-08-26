@@ -98,9 +98,10 @@ public class PedidoService {
     }
 
     public List<PedidoResponse> exibirPedidosPorStatus(int cod) {
-        return pedidoRepository.findAll()
+        Status status = Status.valorDoStatus(cod);
+
+        return pedidoRepository.findByStatus(status)
                 .stream()
-                .filter(p -> p.getStatus().getCodigo() == cod)
                 .map(mapper::pedidoToResponse)
                 .toList();
     }
@@ -138,9 +139,8 @@ public class PedidoService {
     }
 
     public List<PedidoResponse> buscarPedidosCliente(Long clienteId) {
-        return pedidoRepository.findAll()
+        return pedidoRepository.findByClienteId(clienteId)
                 .stream()
-                .filter(p -> p.getCliente().getId().equals(clienteId))
                 .map(mapper::pedidoToResponse)
                 .toList();
     }
