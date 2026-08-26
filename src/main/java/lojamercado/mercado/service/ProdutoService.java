@@ -49,14 +49,10 @@ public class ProdutoService {
         produtoRepository.deleteById(id);
     }
 
-    public ProdutoResponse exibirProdutoPorNome(String nomeProduto) {
-        return produtoRepository.findAll()
+    public List<ProdutoResponse> exibirProdutoPorNome(String nomeProduto) {
+        return produtoRepository.findByNomeContainingIgnoreCase(nomeProduto)
                 .stream()
-                .filter(p -> p.getNome().equalsIgnoreCase(nomeProduto))
-                .map(mapper::toResponse)
-                .findFirst()
-                .orElseThrow(
-                        () -> new ProdutoNotFoundException("Nenhum produto com esse nome foi encontrado no sistema"));
+                .toList();
     }
 
     public List<ProdutoResponse> exibirTodosProdutos() {
@@ -68,9 +64,8 @@ public class ProdutoService {
 
     public List<ProdutoResponse> exibirProdutosSemEstoque() {
 
-        return produtoRepository.findAll()
+        return produtoRepository.findByEstoque(0)
                 .stream()
-                .filter(p -> p.getEstoque() == 0)
                 .map(mapper::toResponse)
                 .toList();
     }
@@ -78,7 +73,6 @@ public class ProdutoService {
     public BigDecimal alterarPrecoProduto(Long id, BigDecimal preco) {
         Produto p = produtoRepository.findById(id)
                 .orElseThrow(() -> new ProdutoNotFoundException("Produto não encontrado"));
-        mapper.toResponse(p);
 
         p.setPreco(preco);
         produtoRepository.save(p);
@@ -88,12 +82,9 @@ public class ProdutoService {
     public Integer alterarQuantidade(Long id, Integer estoque) {
         Produto p = produtoRepository.findById(id)
                 .orElseThrow(() -> new ProdutoNotFoundException("Produto não encontrado"));
-
-        mapper.toResponse(p);
         p.setEstoque(estoque);
 
         produtoRepository.save(p);
         return p.getEstoque();
     }
-
 }
