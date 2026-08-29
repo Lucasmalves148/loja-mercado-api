@@ -8,6 +8,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lojamercado.mercado.enumerate.Categoria;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,8 +28,10 @@ public class Produto {
     
     private String nome;
 
+    @Positive
     private BigDecimal preco;
 
+    @PositiveOrZero
     private int estoque;
     
     @Enumerated(EnumType.STRING)

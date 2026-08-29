@@ -52,6 +52,7 @@ public class ProdutoService {
     public List<ProdutoResponse> exibirProdutoPorNome(String nomeProduto) {
         return produtoRepository.findByNomeContainingIgnoreCase(nomeProduto)
                 .stream()
+                .map(mapper::toResponse)
                 .toList();
     }
 
