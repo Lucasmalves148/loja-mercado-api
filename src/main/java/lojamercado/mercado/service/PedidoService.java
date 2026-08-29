@@ -1,6 +1,7 @@
 package lojamercado.mercado.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
@@ -72,7 +73,7 @@ public class PedidoService {
 
         p.setCliente(cliente);
         p.setItens(itens);
-        p.setData(request.getData());
+        p.setData(request.getData() != null ? request.getData() : LocalDate.now());
         p.setStatus(Status.PENDENTE);
 
         pedidoRepository.save(p);
@@ -81,7 +82,10 @@ public class PedidoService {
     }
 
     public void deletarPedido(Long id) {
-        pedidoRepository.deleteById(id);
+        Pedido p = pedidoRepository.findById(id)
+                .orElseThrow(() -> new PedidoNotFoundException("Pedido de id " + id + " não encontrado"));
+
+        pedidoRepository.delete(p);
     }
 
     public PedidoResponse encontrarPedidoPorId(Long id) {

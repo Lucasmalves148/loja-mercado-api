@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.PastOrPresent;
 import lojamercado.mercado.enumerate.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,6 +31,7 @@ public class Pedido {
     @ManyToOne
     private Cliente cliente;
     
+    @PastOrPresent
     private LocalDate data;
 
     @Enumerated(EnumType.STRING)

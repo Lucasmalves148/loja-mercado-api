@@ -2,7 +2,9 @@ package lojamercado.mercado.dto.request;
 
 import java.time.LocalDate;
 import java.util.List;
-import lojamercado.mercado.enumerate.Status;
+
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,11 +14,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PedidoRequest {
  
+    @NotNull(message = "Cliente ID é obrigatório")
     private Long clienteId;
     
     private LocalDate data;
 
-    private Status status;
-    
+    @NotEmpty(message = "Pedido deve ter pelo menos um item")
     private List<ItemPedidoRequest> itens;
 }

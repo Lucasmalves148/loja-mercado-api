@@ -24,21 +24,10 @@ public class Mapper {
         return cResponse;
     }
 
-    public ProdutoResponse produtoToResponse(Produto p) {
-        ProdutoResponse produtoResponse = new ProdutoResponse();
-        produtoResponse.setCategoria(p.getCategoria());
-        produtoResponse.setEstoque(p.getEstoque());
-        produtoResponse.setId(p.getId());
-        produtoResponse.setNome(p.getNome());
-        produtoResponse.setPreco(p.getPreco());
-
-        return produtoResponse;
-    }
-
     public ItemPedidoResponse itemPedidoToResponse(ItemPedido i) {
         ItemPedidoResponse itemPedidoResponse = new ItemPedidoResponse();
         itemPedidoResponse.setPrecoUnitario(i.getPrecoUnitario());
-        itemPedidoResponse.setProduto(produtoToResponse(i.getProduto()));
+        itemPedidoResponse.setProduto(toResponse(i.getProduto()));
         itemPedidoResponse.setQuantidade(i.getQuantidade());
 
         return itemPedidoResponse;
