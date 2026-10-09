@@ -74,6 +74,4 @@ public class ProdutoController {
         return ResponseEntity.ok(produtoService.alterarQuantidade(id, estoque));
     }
 
-
-
 }
